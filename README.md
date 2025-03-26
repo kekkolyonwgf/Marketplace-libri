@@ -82,7 +82,7 @@ GET /api/messages/:book_id - Lista messaggi per annuncio (protetto)
 
 4. Istruzioni cURL per Test API ----------------------------------------------------------------------------------------------------------
 Registrazione Utente
-
+```
 curl -X POST http://localhost:3000/api/auth/register 
 -H "Content-Type: application/json" 
 -d '{
@@ -91,18 +91,18 @@ curl -X POST http://localhost:3000/api/auth/register
       "email":"mario@example.com", 
       "password":"password123"
     }'
-
+```
 Login:
-bash
-Copy
+```
 curl -X POST http://localhost:3000/api/auth/login \
 -H "Content-Type: application/json" 
 -d '{
       "email":"mario@example.com", 
       "password":"password123"
     }'
+```
 -------------------------------------------------------------------------------------------------------------------------------------------
-
+```
 curl -X POST http://localhost:3000/api/books \
 -H "Content-Type: application/json" \
 -H "Authorization: Bearer <TUO_TOKEN_JWT>" \
@@ -112,7 +112,7 @@ curl -X POST http://localhost:3000/api/books \
     "price":15.50, 
     "description":"Edizione 2001"
     }'
-    
+```    
 5. Test Eseguiti----------------------------------------------------------------------------------------------------------------------------
 Registrazione utente: Verifica creazione account e errori (email già usata)
 
