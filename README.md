@@ -44,7 +44,9 @@ CREATE TABLE Books (
     FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
 
--- Messaggi
+
+--Messaggi:
+
 CREATE TABLE Messages (
     message_id INT AUTO_INCREMENT PRIMARY KEY,
     sender_id INT NOT NULL,
@@ -58,30 +60,30 @@ CREATE TABLE Messages (
 );
 ```
 
-##3. API REST Implementate
-**Elenco degli endpoint principali:**
 
-Autenticazione
-POST /api/auth/register - Registrazione utente
+**Elenco degli endpoint principali**:
+- Autenticazione POST /api/auth/register - Registrazione utente
 
-POST /api/auth/login - Login utente
+- POST /api/auth/login - Login utente
 
-Libri
-GET /api/books - Lista tutti i libri (con filtri opzionali)
+- Libri
+- GET /api/books - Lista tutti i libri (con filtri opzionali)
 
-POST /api/books - Crea nuovo annuncio (protetto)
+- POST /api/books - Crea nuovo annuncio (protetto)
 
-GET /api/books/:id - Dettagli libro specifico
+- GET /api/books/:id - Dettagli libro specifico
 
-DELETE /api/books/:id - Elimina annuncio (protetto)
+- DELETE /api/books/:id - Elimina annuncio (protetto)
 
-Messaggi
-POST /api/messages - Invia messaggio (protetto)
+- Messaggi
+ POST /api/messages - Invia messaggio (protetto)
 
-GET /api/messages/:book_id - Lista messaggi per annuncio (protetto)
+- GET /api/messages/:book_id - Lista messaggi per annuncio (protetto)
 
-##4. Istruzioni cURL per Test API 
-Registrazione Utente
+## 4. Istruzioni cURL per Test API 
+
+**Registrazione Utente**
+
 ```
 curl -X POST http://localhost:3000/api/auth/register 
 -H "Content-Type: application/json" 
@@ -92,7 +94,8 @@ curl -X POST http://localhost:3000/api/auth/register
       "password":"password123"
     }'
 ```
-Login:
+**Login:**
+
 ```
 curl -X POST http://localhost:3000/api/auth/login \
 -H "Content-Type: application/json" 
@@ -113,7 +116,7 @@ curl -X POST http://localhost:3000/api/books \
     "description":"Edizione 2001"
     }'
 ```    
-##5. Test Eseguiti
+## 5. Test Eseguiti
 Registrazione utente: Verifica creazione account e errori (email già usata)
 
 Login: Test autenticazione con credenziali corrette/errate
@@ -123,9 +126,9 @@ Pubblicazione annuncio: Controllo upload immagini e campi obbligatori
 Messaggistica (da implementare)
 
 Ricerca con filtri (da implementare)
-------------------------------------------
 
-Istruzioni per Avviare il Progetto:
+
+## Istruzioni per Avviare il Progetto:
 
 Clona il repo: git clone <url_repo>
 
@@ -136,5 +139,3 @@ Configura .env con credenziali DB e JWT secret
 Avvia backend: node server.js
 
 Apri index.html nel browser per il frontend
----------------------------------------------------------------------------------------------------------------------------------------------
-
