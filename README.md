@@ -58,7 +58,7 @@ CREATE TABLE Messages (
 );
 ```
 
-3. API REST Implementate
+##3. API REST Implementate
 Elenco degli endpoint principali:
 
 Autenticazione
@@ -80,7 +80,7 @@ POST /api/messages - Invia messaggio (protetto)
 
 GET /api/messages/:book_id - Lista messaggi per annuncio (protetto)
 
-4. Istruzioni cURL per Test API 
+##4. Istruzioni cURL per Test API 
 Registrazione Utente
 ```
 curl -X POST http://localhost:3000/api/auth/register 
@@ -113,7 +113,7 @@ curl -X POST http://localhost:3000/api/books \
     "description":"Edizione 2001"
     }'
 ```    
-5. Test Eseguiti
+##5. Test Eseguiti
 Registrazione utente: Verifica creazione account e errori (email già usata)
 
 Login: Test autenticazione con credenziali corrette/errate
