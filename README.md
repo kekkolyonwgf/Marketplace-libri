@@ -17,7 +17,7 @@ Applicazione web per lo scambio di libri usati tra utenti, con funzionalità di 
 - Sistema di messaggistica tra utenti per trattative
 - Dashboard utente per gestione annunci e messaggi
 
-## 2. Struttura del Database (Schema ER)--------------------------------------------------------------------------------------------------------
+## 2. Struttura del Database (Schema ER)
 Ecco le tabelle principali (costruite e importate da xampp usando phpmyadmin:
 
 ```sql
@@ -58,7 +58,7 @@ CREATE TABLE Messages (
 );
 ```
 
-3. API REST Implementate-------------------------------------------------------------------------------------------------------------------
+3. API REST Implementate
 Elenco degli endpoint principali:
 
 Autenticazione
@@ -80,7 +80,7 @@ POST /api/messages - Invia messaggio (protetto)
 
 GET /api/messages/:book_id - Lista messaggi per annuncio (protetto)
 
-4. Istruzioni cURL per Test API ----------------------------------------------------------------------------------------------------------
+4. Istruzioni cURL per Test API 
 Registrazione Utente
 ```
 curl -X POST http://localhost:3000/api/auth/register 
@@ -101,7 +101,7 @@ curl -X POST http://localhost:3000/api/auth/login \
       "password":"password123"
     }'
 ```
--------------------------------------------------------------------------------------------------------------------------------------------
+
 ```
 curl -X POST http://localhost:3000/api/books \
 -H "Content-Type: application/json" \
@@ -113,7 +113,7 @@ curl -X POST http://localhost:3000/api/books \
     "description":"Edizione 2001"
     }'
 ```    
-5. Test Eseguiti----------------------------------------------------------------------------------------------------------------------------
+5. Test Eseguiti
 Registrazione utente: Verifica creazione account e errori (email già usata)
 
 Login: Test autenticazione con credenziali corrette/errate
@@ -123,7 +123,7 @@ Pubblicazione annuncio: Controllo upload immagini e campi obbligatori
 Messaggistica (da implementare)
 
 Ricerca con filtri (da implementare)
-#######################################################################################################
+------------------------------------------
 
 Istruzioni per Avviare il Progetto:
 
