@@ -59,7 +59,7 @@ CREATE TABLE Messages (
 ```
 
 ##3. API REST Implementate
-Elenco degli endpoint principali:
+**Elenco degli endpoint principali:**
 
 Autenticazione
 POST /api/auth/register - Registrazione utente
