@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Marketplace Libri</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <a href="home.html">Home</a>
+        <a href="vendi-libro.html">Vendi Libro</a>
+        <a href="login.html">Login</a>
+    </nav>
+
+    <div class="container libri-container">
+        <h1>Libri in Vendita</h1>
+        
+        <div class="filtri">
+            <input type="text" id="ricerca-titolo" placeholder="Cerca libro">
+            <select id="categoria-filtro">
+                <option value="">Tutte le Categorie</option>
+                <option value="scolastico">Scolastico</option>
+                <option value="narrativa">Narrativa</option>
+                <option value="saggistica">Saggistica</option>
+            </select>
+        </div>
+
+        <div class="lista-libri" id="lista-libri">
+            <!-- Qui verranno caricati dinamicamente i libri dal database -->
+            <div class="libro-card">
+                <img src="placeholder-libro.jpg" alt="Copertina Libro">
+                <h3>Titolo Libro</h3>
+                <p>Autore: Nome Autore</p>
+                <p>Prezzo: €15.99</p>
+                <button onclick="dettaglioLibro()">Dettagli</button>
+            </div>
+            <!-- Altri libri verranno aggiunti qui dinamicamente -->
+        </div>
+    </div>
+
+    <script src="JavaS/home.js"></script>
+</body>
+</html>

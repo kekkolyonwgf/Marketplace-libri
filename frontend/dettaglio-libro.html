@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Dettagli Libro</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <a href="home.html">Home</a>
+        <a href="vendi-libro.html">Vendi Libro</a>
+        <a href="login.html">Login</a>
+    </nav>
+
+    <div class="container dettaglio-libro">
+        <div id="libro-dettaglio">
+            <!-- Qui verranno caricati dinamicamente i dettagli del libro -->
+            <div class="loader">Caricamento...</div>
+        </div>
+
+        <div class="contatta-venditore">
+            <h3>Chat con il Venditore</h3>
+            <div id="chat-box">
+                <!-- I messaggi verranno caricati qui -->
+            </div>
+            <form id="form-chat">
+                <textarea id="messaggio-chat" placeholder="Scrivi un messaggio..."></textarea>
+                <button type="submit">Invia</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="JavaS/dettaglio-libro.js"></script>
+</body>
+</html>

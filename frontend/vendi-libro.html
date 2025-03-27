@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Vendi Libro - Marketplace</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <a href="home.html">Home</a>
+        <a href="vendi-libro.html">Vendi Libro</a>
+        <a href="login.html">Login</a>
+    </nav>
+
+    <div class="container vendi-libro-container">
+        <h2>Inserisci Libro in Vendita</h2>
+        <form id="form-vendi-libro" action="/inserisci-libro" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="titolo">Titolo</label>
+                <input type="text" id="titolo" name="titolo" required>
+            </div>
+            <div class="form-group">
+                <label for="autore">Autore</label>
+                <input type="text" id="autore" name="autore" required>
+            </div>
+            <div class="form-group">
+                <label for="categoria">Categoria</label>
+                <select id="categoria" name="categoria" required>
+                    <option value="">Seleziona Categoria</option>
+                    <option value="scolastico">Scolastico</option>
+                    <option value="narrativa">Narrativa</option>
+                    <option value="saggistica">Saggistica</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="prezzo">Prezzo</label>
+                <input type="number" id="prezzo" name="prezzo" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="condizione">Condizione</label>
+                <select id="condizione" name="condizione" required>
+                    <option value="">Stato Libro</option>
+                    <option value="nuovo">Nuovo</option>
+                    <option value="come-nuovo">Come Nuovo</option>
+                    <option value="buono">Buono</option>
+                    <option value="accettabile">Accettabile</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="descrizione">Descrizione</label>
+                <textarea id="descrizione" name="descrizione" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="immagine">Immagine Libro</label>
+                <input type="file" id="immagine" name="immagine" accept="image/*">
+            </div>
+            <button type="submit">Pubblica Libro</button>
+        </form>
+    </div>
+
+    <script src="JavaS/vendi-libro.js"></script>
+</body>
+</html>
