@@ -2,42 +2,108 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marketplace Libri</title>
-    <link rel="stylesheet" href="styles.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background: linear-gradient(135deg, #f9e79f, #f7dc6f);
+            color: #333;
+            min-height: 100vh;
+        }
+        .navbar {
+            background: #f39c12;
+        }
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .form-control {
+            border-radius: 8px;
+        }
+        .btn {
+            border-radius: 8px;
+            background-color: #f39c12;
+            border: none;
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            background-color: #e67e22;
+        }
+        .spinner-border {
+            color: #f39c12;
+        }
+    </style>
 </head>
 <body>
-    <nav>
-        <a href="home.html">Home</a>
-        <a href="vendi-libro.html">Vendi Libro</a>
-        <a href="login.html">Login</a>
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="home.html">
+                <i class="fas fa-book-open me-2"></i>MarketPlace Libri
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="home.html"><i class="fas fa-home me-1"></i>Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="vendi-libro.html"><i class="fas fa-plus me-1"></i>Vendi Libro</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <span class="text-light me-3" id="username"></span>
+                    <button class="btn btn-light text-dark" id="logout-btn">
+                        <i class="fas fa-sign-out-alt me-1"></i>Logout
+                    </button>
+                </div>
+            </div>
+        </div>
     </nav>
 
-    <div class="container libri-container">
-        <h1>Libri in Vendita</h1>
-        
-        <div class="filtri">
-            <input type="text" id="ricerca-titolo" placeholder="Cerca libro">
-            <select id="categoria-filtro">
-                <option value="">Tutte le Categorie</option>
-                <option value="scolastico">Scolastico</option>
-                <option value="narrativa">Narrativa</option>
-                <option value="saggistica">Saggistica</option>
-            </select>
+    <div class="container py-5">
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <h1 class="mb-4">
+                    <i class="fas fa-books me-2"></i>Libri in Vendita
+                </h1>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="ricerca-titolo" placeholder="Cerca libro...">
+                    <select class="form-select" id="categoria-filtro" style="max-width: 150px;">
+                        <option value="">Tutte le Categorie</option>
+                        <option value="scolastico">Scolastico</option>
+                        <option value="narrativa">Narrativa</option>
+                        <option value="saggistica">Saggistica</option>
+                    </select>
+                </div>
+            </div>
         </div>
 
-        <div class="lista-libri" id="lista-libri">
-            <!-- Qui verranno caricati dinamicamente i libri dal database -->
-            <div class="libro-card">
-                <img src="placeholder-libro.jpg" alt="Copertina Libro">
-                <h3>Titolo Libro</h3>
-                <p>Autore: Nome Autore</p>
-                <p>Prezzo: €15.99</p>
-                <button onclick="dettaglioLibro()">Dettagli</button>
+        <div class="row g-4" id="lista-libri">
+            <div class="col-12 text-center">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Caricamento...</span>
+                </div>
+                <p class="mt-2">Caricamento libri...</p>
             </div>
-            <!-- Altri libri verranno aggiunti qui dinamicamente -->
         </div>
     </div>
 
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="JavaS/home.js"></script>
 </body>
 </html>

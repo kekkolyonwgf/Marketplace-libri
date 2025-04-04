@@ -11,12 +11,8 @@ router.post('/register', async (req, res) => {
     
     try {
         const { nome, cognome, email, password } = req.body;
-        const hashedPassword = await bcrypt.hash(password, 10);
-await query('INSERT INTO utenti (nome, cognome, email, password) VALUES (?, ?, ?, ?)', 
-    [nome, cognome, email, hashedPassword]);
-res.status(201).json({ message: 'Registrazione completata!' });
-        
-        // Validazioni aggiuntive
+
+        // Validazioni
         if (!nome || !cognome || !email || !password) {
             return res.status(400).json({ 
                 message: 'Tutti i campi sono obbligatori',
@@ -29,7 +25,22 @@ res.status(201).json({ message: 'Registrazione completata!' });
             });
         }
 
-        // Resto del codice invariato...
+        // Verifica se l'email esiste già
+        const existingUsers = await query('SELECT * FROM utenti WHERE email = ?', [email]);
+        if (existingUsers.length > 0) {
+            return res.status(400).json({ message: 'Email già registrata' });
+        }
+
+        // Hash della password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Inserimento utente
+        await query(
+            'INSERT INTO utenti (nome, cognome, email, password) VALUES (?, ?, ?, ?)', 
+            [nome, cognome, email, hashedPassword]
+        );
+
+        res.status(201).json({ message: 'Registrazione completata con successo!' });
     } catch (error) {
         console.error('Errore dettagliato durante la registrazione:', error);
         res.status(500).json({ 
@@ -66,7 +77,8 @@ router.post('/login', async (req, res) => {
             token, 
             user: { 
                 id: user.id, 
-                nome: user.nome, 
+                nome: user.nome,
+                cognome: user.cognome,
                 email: user.email 
             } 
         });

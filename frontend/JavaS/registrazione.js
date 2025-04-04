@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const registerForm = document.getElementById('register-form');
+    const BASE_URL = 'http://localhost:3000';
+    const FRONTEND_URL = 'http://localhost:5501/frontend';
 
     registerForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -25,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         try {
-            const response = await fetch('/auth/register', {
+            const response = await fetch(`${BASE_URL}/auth/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -41,26 +43,26 @@ document.addEventListener('DOMContentLoaded', () => {
             // Log dettagliato della risposta
             console.log('Response status:', response.status);
             
-            const result = await response.text(); // Usa text() invece di json()
+            const result = await response.text();
             console.log('Response body:', result);
 
-            // Prova a parsare manualmente il JSON
+            let jsonResult;
             try {
-                const jsonResult = JSON.parse(result);
-                
-                if (response.ok) {
-                    alert('Registrazione completata con successo!');
-                    window.location.href = '/login.html';
-                } else {
-                    alert(jsonResult.message || 'Errore durante la registrazione');
-                }
+                jsonResult = JSON.parse(result);
             } catch (parseError) {
                 console.error('Errore nel parsing JSON:', parseError);
-                alert('Errore inaspettato: ' + result);
+                throw new Error('Risposta non valida dal server');
+            }
+
+            if (response.ok) {
+                alert('Registrazione completata con successo!');
+                window.location.href = `${FRONTEND_URL}/login.html`;
+            } else {
+                alert(jsonResult.message || 'Errore durante la registrazione');
             }
 
         } catch (error) {
-            console.error('Errore di rete completo:', error);
+            console.error('Errore di rete:', error);
             alert('Si è verificato un errore di rete. Riprova.');
         }
     });

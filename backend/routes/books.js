@@ -34,7 +34,10 @@ const authenticateToken = (req, res, next) => {
 router.post('/inserisci-libro', authenticateToken, upload.single('immagine'), async (req, res) => {
     try {
         const { titolo, autore, categoria, prezzo, condizione, descrizione } = req.body;
-        const immagine = req.file ? `/uploads/${req.file.filename}` : null;
+        // Se non viene caricata un'immagine, usa l'immagine placeholder
+        const immagine = req.file ? 
+            `/uploads/${req.file.filename}` : 
+            '/uploads/1PLHLD.png';
 
         await query(
             'INSERT INTO libri (titolo, autore, categoria, prezzo, condizione, descrizione, immagine, venditore_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
@@ -43,13 +46,13 @@ router.post('/inserisci-libro', authenticateToken, upload.single('immagine'), as
 
         res.status(201).json({ message: 'Libro inserito con successo' });
     } catch (error) {
-        console.error(error);
+        console.error('Errore durante inserimento libro:', error);
         res.status(500).json({ message: 'Errore nell\'inserimento del libro' });
     }
 });
 
 // Rotta per ottenere libri
-router.get('/', async (req, res) => {
+router.get('/', authenticateToken, async (req, res) => {
     try {
         const { titolo, categoria } = req.query;
         
@@ -74,8 +77,8 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Aggiungi questa rotta in books.js
-router.get('/:id', async (req, res) => {
+// Rotta per ottenere i dettagli di un libro
+router.get('/:id', authenticateToken, async (req, res) => {
     try {
         const { id } = req.params;
         const libri = await query('SELECT * FROM libri WHERE id = ?', [id]);
@@ -86,8 +89,28 @@ router.get('/:id', async (req, res) => {
         
         res.json(libri[0]);
     } catch (error) {
-        console.error(error);
+        console.error('Errore nel recupero dei dettagli del libro:', error);
         res.status(500).json({ message: 'Errore nel recupero dei dettagli del libro' });
+    }
+});
+
+// Rotta per eliminare un libro
+router.delete('/:id', authenticateToken, async (req, res) => {
+    try {
+        const { id } = req.params;
+        
+        // Verifica che l'utente sia il proprietario del libro
+        const libro = await query('SELECT * FROM libri WHERE id = ? AND venditore_id = ?', [id, req.user.userId]);
+        
+        if (libro.length === 0) {
+            return res.status(403).json({ message: 'Non hai i permessi per eliminare questo libro' });
+        }
+        
+        await query('DELETE FROM libri WHERE id = ?', [id]);
+        res.json({ message: 'Libro eliminato con successo' });
+    } catch (error) {
+        console.error('Errore durante l\'eliminazione del libro:', error);
+        res.status(500).json({ message: 'Errore durante l\'eliminazione del libro' });
     }
 });
 

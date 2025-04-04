@@ -2,35 +2,83 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dettagli Libro</title>
-    <link rel="stylesheet" href="styles.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
 </head>
-<body>
-    <nav>
-        <a href="home.html">Home</a>
-        <a href="vendi-libro.html">Vendi Libro</a>
-        <a href="login.html">Login</a>
+<body style="background: linear-gradient(135deg, #f9e79f, #f7dc6f); color: #333;">
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm sticky-top" style="background: #f39c12;">
+        <div class="container">
+            <a class="navbar-brand" href="home.html">
+                <i class="fas fa-book-open me-2"></i>MarketPlace Libri
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html"><i class="fas fa-home me-1"></i>Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="vendi-libro.html"><i class="fas fa-plus me-1"></i>Vendi Libro</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <span class="text-light me-3" id="username"></span>
+                    <button class="btn btn-outline-light" id="logout-btn">
+                        <i class="fas fa-sign-out-alt me-1"></i>Logout
+                    </button>
+                </div>
+            </div>
+        </div>
     </nav>
 
-    <div class="container dettaglio-libro">
-        <div id="libro-dettaglio">
-            <!-- Qui verranno caricati dinamicamente i dettagli del libro -->
-            <div class="loader">Caricamento...</div>
-        </div>
-
-        <div class="contatta-venditore">
-            <h3>Chat con il Venditore</h3>
-            <div id="chat-box">
-                <!-- I messaggi verranno caricati qui -->
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card shadow-sm" id="libro-dettaglio">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <div class="spinner-border text-warning" role="status">
+                                <span class="visually-hidden">Caricamento...</span>
+                            </div>
+                            <p class="mt-2">Caricamento dettagli libro...</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <form id="form-chat">
-                <textarea id="messaggio-chat" placeholder="Scrivi un messaggio..."></textarea>
-                <button type="submit">Invia</button>
-            </form>
+            <div class="col-lg-4">
+                <div class="card shadow-sm contatta-venditore">
+                    <div class="card-header" style="background: #f39c12; color: white;">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-comments me-2"></i>Chat con il Venditore
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chat-messages" id="chat-box" style="height: 300px; overflow-y: auto;">
+                            <!-- I messaggi verranno caricati qui -->
+                        </div>
+                        <form id="form-chat" class="mt-3">
+                            <div class="input-group">
+                                <textarea class="form-control" id="messaggio-chat" rows="2" placeholder="Scrivi un messaggio..."></textarea>
+                                <button class="btn btn-warning" type="submit">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <script src="/socket.io/socket.io.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="JavaS/dettaglio-libro.js"></script>
 </body>
 </html>

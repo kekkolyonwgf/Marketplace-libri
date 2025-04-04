@@ -4,7 +4,11 @@ const socketIo = require('socket.io');
 const cors = require('cors');
 const path = require('path');
 const mysql = require('mysql2');
+const fs = require('fs');
 require('dotenv').config();
+
+const { query } = require('./database'); // Usa il pool di connessioni esistente
+const { setupPlaceholderImage } = require('./config/setup');
 
 const app = express();
 const server = http.createServer(app);
@@ -12,13 +16,16 @@ const io = socketIo(server);
 
 const PORT = process.env.PORT || 3000;
 
+// Inizializza l'immagine placeholder
+setupPlaceholderImage();
+
 // Middleware cruciali
 app.use(cors({
-    origin: ['http://127.0.0.1:5500', 'http://localhost:5500'],
+    origin: ['http://localhost:5501', 'http://127.0.0.1:5501'], // Origini consentite
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
 }));
-
 
 app.use((req, res, next) => {
     console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
@@ -32,7 +39,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Servire file statici
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(path.join(__dirname, 'public', 'uploads')));
+app.use(express.static(path.join(__dirname, '../frontend')));
 
 // Log di tutte le richieste (per debug)
 app.use((req, res, next) => {
@@ -48,23 +56,12 @@ const bookRoutes = require('./routes/books');
 app.use('/auth', authRoutes);
 app.use('/books', bookRoutes);
 
-// Connessione al database usando variabili d'ambiente
-const db = mysql.createConnection({
-    host: process.env.DB_HOST || 'localhost',
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_NAME || 'libro_marketplace'
+// Rotta principale che reindirizza alla home
+app.get('/', (req, res) => {
+    res.redirect('/home.html');
 });
 
-db.connect(err => {
-    if (err) {
-        console.error('Errore di connessione al database:', err);
-        return;
-    }
-    console.log('Connessione al database riuscita');
-});
-
-// Gestione WebSocket (invariata)
+// Gestione WebSocket (modificata per usare il pool di connessioni)
 io.on('connection', (socket) => {
     console.log('Un utente si è connesso');
 
@@ -74,16 +71,17 @@ io.on('connection', (socket) => {
         console.log(`Utente ${utenteId} è entrato nella stanza ${room}`);
     });
 
-    socket.on('sendMessage', ({ libroId, mittenteId, destinatarioId, messaggio }) => {
-        const query = 'INSERT INTO messaggi (libro_id, mittente_id, destinatario_id, messaggio) VALUES (?, ?, ?, ?)';
-        db.query(query, [libroId, mittenteId, destinatarioId, messaggio], (err, result) => {
-            if (err) {
-                console.error("Errore durante l'inserimento del messaggio:", err);
-                return;
-            }
+    socket.on('sendMessage', async ({ libroId, mittenteId, destinatarioId, messaggio }) => {
+        try {
+            await query(
+                'INSERT INTO messaggi (libro_id, mittente_id, destinatario_id, messaggio) VALUES (?, ?, ?, ?)',
+                [libroId, mittenteId, destinatarioId, messaggio]
+            );
             const room = `libro_${libroId}_user_${mittenteId}_venditore_${destinatarioId}`;
             io.to(room).emit('receiveMessage', { messaggio, mittenteId });
-        });
+        } catch (err) {
+            console.error("Errore durante l'inserimento del messaggio:", err);
+        }
     });
 
     socket.on('disconnect', () => {
@@ -98,6 +96,4 @@ app.use((err, req, res, next) => {
 });
 
 // Avvia il server
-server.listen(PORT, () => {
-    console.log(`Server in esecuzione sulla porta ${PORT}`);
-});
+app.listen(PORT, () => console.log(`Server avviato su http://localhost:${PORT}`));

@@ -2,37 +2,100 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrazione - Marketplace Libri</title>
-    <link rel="stylesheet" href="styles.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background: linear-gradient(135deg, #f9e79f, #f7dc6f); /* Gradiente giallo caldo */
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card {
+            animation: fadeIn 0.8s ease-in-out;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: scale(1.02);
+        }
+        .form-control {
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        .form-control:focus {
+            box-shadow: 0 0 10px rgba(255, 165, 0, 0.5); /* Arancio per il focus */
+            border-color: #f39c12; /* Giallo-arancio */
+        }
+        .btn {
+            border-radius: 8px;
+            transition: background 0.3s, transform 0.2s;
+            background-color: #f39c12; /* Giallo-arancio per il bottone */
+            border: none;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            background-color: #e67e22; /* Arancio più scuro per hover */
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .card-title {
+            color: #f39c12; /* Giallo-arancio per il titolo */
+        }
+        .text-primary {
+            color: #f39c12 !important; /* Colore primario giallo-arancio */
+        }
+    </style>
 </head>
 <body>
-    <div class="container register-container">
-        <form id="register-form" action="/register" method="POST">
-            <h2>Registrazione</h2>
-            <div class="form-group">
-                <label for="nome">Nome</label>
-                <input type="text" id="nome" name="nome" required>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card shadow-lg p-4 bg-white">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-user-plus fa-3x text-primary mb-3"></i>
+                        <h2 class="card-title">Registrazione</h2>
+                    </div>
+                    <form id="register-form" action="/register" method="POST">
+                        <div class="mb-3">
+                            <label for="nome" class="form-label">Nome</label>
+                            <input type="text" class="form-control" id="nome" name="nome" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cognome" class="form-label">Cognome</label>
+                            <input type="text" class="form-control" id="cognome" name="cognome" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="conferma-password" class="form-label">Conferma Password</label>
+                            <input type="password" class="form-control" id="conferma-password" name="conferma-password" required>
+                        </div>
+                        <button type="submit" class="btn w-100 mb-3">Registrati</button>
+                        <p class="text-center mb-0">Hai già un account? <a href="login.html" class="text-primary">Accedi</a></p>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="cognome">Cognome</label>
-                <input type="text" id="cognome" name="cognome" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <div class="form-group">
-                <label for="conferma-password">Conferma Password</label>
-                <input type="password" id="conferma-password" name="conferma-password" required>
-            </div>
-            <button type="submit">Registrati</button>
-            <p>Hai già un account? <a href="login.html">Accedi</a></p>
-        </form>
+        </div>
     </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="JavaS/registrazione.js"></script>
 </body>
 </html>
