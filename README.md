@@ -117,7 +117,7 @@ MarketPlace/
        immagine VARCHAR(255),
        venditore_id INT NOT NULL,
        data_pubblicazione TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-       FOREIGN KEY (venditore_id) REFERENCES utenti(id) ON DELETE CASCADE
+       FOREIGN KEY (venditore_id) REFERENCES utenti(id) 
    );
 
    -- Tabella Messaggi
@@ -128,9 +128,9 @@ MarketPlace/
        destinatario_id INT NOT NULL,
        messaggio TEXT NOT NULL,
        data_invio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-       FOREIGN KEY (libro_id) REFERENCES libri(id) ON DELETE CASCADE,
-       FOREIGN KEY (mittente_id) REFERENCES utenti(id) ON DELETE CASCADE,
-       FOREIGN KEY (destinatario_id) REFERENCES utenti(id) ON DELETE CASCADE
+       FOREIGN KEY (libro_id) REFERENCES libri(id) ,
+       FOREIGN KEY (mittente_id) REFERENCES utenti(id),
+       FOREIGN KEY (destinatario_id) REFERENCES utenti(id)
    );
 ```
 
