@@ -93,13 +93,54 @@ MarketPlace/
    USE marketplace;
    ```
 
-2. **Installazione Dipendenze Backend**
+2. **Creazione Tabelle**
+   ```sql
+   -- Tabella Utenti
+   CREATE TABLE utenti (
+       id INT AUTO_INCREMENT PRIMARY KEY,
+       nome VARCHAR(50) NOT NULL,
+       cognome VARCHAR(50) NOT NULL,
+       email VARCHAR(100) NOT NULL UNIQUE,
+       password VARCHAR(255) NOT NULL,
+       data_registrazione TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+   );
+
+   -- Tabella Libri
+   CREATE TABLE libri (
+       id INT AUTO_INCREMENT PRIMARY KEY,
+       titolo VARCHAR(100) NOT NULL,
+       autore VARCHAR(100) NOT NULL,
+       categoria VARCHAR(50) NOT NULL,
+       descrizione TEXT,
+       prezzo DECIMAL(10,2) NOT NULL,
+       condizione VARCHAR(50),
+       immagine VARCHAR(255),
+       venditore_id INT NOT NULL,
+       data_pubblicazione TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+       FOREIGN KEY (venditore_id) REFERENCES utenti(id) ON DELETE CASCADE
+   );
+
+   -- Tabella Messaggi
+   CREATE TABLE messaggi (
+       id INT AUTO_INCREMENT PRIMARY KEY,
+       libro_id INT NOT NULL,
+       mittente_id INT NOT NULL,
+       destinatario_id INT NOT NULL,
+       messaggio TEXT NOT NULL,
+       data_invio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+       FOREIGN KEY (libro_id) REFERENCES libri(id) ON DELETE CASCADE,
+       FOREIGN KEY (mittente_id) REFERENCES utenti(id) ON DELETE CASCADE,
+       FOREIGN KEY (destinatario_id) REFERENCES utenti(id) ON DELETE CASCADE
+   );
+```
+
+3. **Installazione Dipendenze Backend**
    ```bash
    cd backend
    npm install
    ```
 
-3. **Configurazione Variabili d'Ambiente**
+4. **Configurazione Variabili d'Ambiente**
    - Creare un file `.env` nella cartella backend con:
      ```
      DB_HOST=localhost
@@ -109,12 +150,12 @@ MarketPlace/
      JWT_SECRET=tua_chiave_segreta
      ```
 
-4. **Avvio Server**
+5. **Avvio Server**
    ```bash
    npm start
    ```
 
-5. **Avvio Frontend**
+6. **Avvio Frontend**
    - Apri il file `frontend/HTML/login.html` nel browser
 
 ## 🔒 Sicurezza
