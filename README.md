@@ -1,141 +1,164 @@
-# Marketplace di Scambio Libri Usati - Web Application Multitier (By Tarricone Gabriele & Kevin Hossain)
+# Marketplace di Libri
 
-## 1. Specifiche dell'Applicazione
-**Descrizione**:  
-Applicazione web per lo scambio di libri usati tra utenti, con funzionalità di pubblicazione annunci, ricerca, e chat integrata.
+Un'applicazione web per la compravendita di libri usati, sviluppata con Node.js, Express e MySQL.
 
-**Stack Tecnologico**:
-- **Frontend**: HTML5, CSS3, JavaScript (Vanilla o framework come React/Vue.js se usato)
-- **Backend**: Node.js con Express.js
-- **Database**: MySQL
-- **Altro**: Multer per upload immagini, Socket.io per chat (se implementata)
+## 🚀 Funzionalità
 
-**Funzionalità Principali**:
-- Registrazione e autenticazione utente (JWT o sessioni)
-- Pubblicazione annunci con titolo, descrizione, prezzo, immagini e categorie
-- Ricerca annunci con filtri (per autore, categoria, prezzo, ecc.)
-- Sistema di messaggistica tra utenti per trattative
-- Dashboard utente per gestione annunci e messaggi
+- **Autenticazione Utenti**
+  - Registrazione nuovi utenti
+  - Login con email e password
+  - Gestione sessione utente
 
-## 2. Struttura del Database (Schema ER)
-Ecco le tabelle principali (costruite e importate da xampp usando phpmyadmin:
+- **Gestione Libri**
+  - Pubblicazione nuovi libri
+  - Visualizzazione catalogo libri
+  - Ricerca e filtri per titolo e categoria
+  - Dettagli completi dei libri
+  - Modifica ed eliminazione libri pubblicati
 
-```sql
--- Utenti
-CREATE TABLE Users (
-    user_id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+- **Sistema di Messaggistica**
+  - Chat in tempo reale tra acquirenti e venditori
+  - Storico messaggi
+  - Notifiche di nuovi messaggi
 
--- Annunci
-CREATE TABLE Books (
-    book_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    title VARCHAR(100) NOT NULL,
-    author VARCHAR(100) NOT NULL,
-    description TEXT,
-    price DECIMAL(10, 2),
-    category VARCHAR(50),
-    image_path VARCHAR(255),
-    is_available BOOLEAN DEFAULT TRUE,
-    FOREIGN KEY (user_id) REFERENCES Users(user_id)
-);
+- **Interfaccia Utente**
+  - Design responsive con Bootstrap 5
+  - Tema caldo e accogliente
+  - Gestione immagini con preview
+  - Feedback visivi per le azioni utente
 
+## 🛠️ Tecnologie Utilizzate
 
---Messaggi:
+### Backend
+- Node.js
+- Express.js
+- MySQL
+- JWT per l'autenticazione
+- Multer per la gestione dei file
+- Socket.io per la chat in tempo reale
 
-CREATE TABLE Messages (
-    message_id INT AUTO_INCREMENT PRIMARY KEY,
-    sender_id INT NOT NULL,
-    receiver_id INT NOT NULL,
-    book_id INT NOT NULL,
-    content TEXT NOT NULL,
-    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (sender_id) REFERENCES Users(user_id),
-    FOREIGN KEY (receiver_id) REFERENCES Users(user_id),
-    FOREIGN KEY (book_id) REFERENCES Books(book_id)
-);
-```
+### Frontend
+- HTML5
+- CSS3
+- JavaScript
+- Bootstrap 5.3.2
+- Font Awesome 6.0.0
 
-
-**Elenco degli endpoint principali**:
-- Autenticazione POST /api/auth/register - Registrazione utente
-
-- POST /api/auth/login - Login utente
-
-- Libri
-- GET /api/books - Lista tutti i libri (con filtri opzionali)
-
-- POST /api/books - Crea nuovo annuncio (protetto)
-
-- GET /api/books/:id - Dettagli libro specifico
-
-- DELETE /api/books/:id - Elimina annuncio (protetto)
-
-- Messaggi
- POST /api/messages - Invia messaggio (protetto)
-
-- GET /api/messages/:book_id - Lista messaggi per annuncio (protetto)
-
-## 4. Istruzioni cURL per Test API 
-
-**Registrazione Utente**
+## 📁 Struttura del Progetto
 
 ```
-curl -X POST http://localhost:3000/api/auth/register 
--H "Content-Type: application/json" 
--d '{
-      "nomi":"mario"   
-      "cognome":"rossi",
-      "email":"mario@example.com", 
-      "password":"password123"
-    }'
+MarketPlace/
+├── backend/
+│   ├── config/
+│   │   └── database.js
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   ├── bookController.js
+│   │   └── messageController.js
+│   ├── models/
+│   │   ├── user.js
+│   │   ├── book.js
+│   │   └── message.js
+│   ├── routes/
+│   │   ├── auth.js
+│   │   ├── books.js
+│   │   └── messages.js
+│   ├── uploads/
+│   └── server.js
+├── frontend/
+│   ├── HTML/
+│   │   ├── login.html
+│   │   ├── registrazione.html
+│   │   ├── home.html
+│   │   ├── vendi-libro.html
+│   │   ├── dettaglio-libro.html
+│   │   └── modifica-libro.html
+│   ├── JavaS/
+│   │   ├── login.js
+│   │   ├── registrazione.js
+│   │   ├── home.js
+│   │   ├── vendi-libro.js
+│   │   ├── dettaglio-libro.js
+│   │   └── modifica-libro.js
+│   └── CSS/
+│       └── style.css
+└── README.md
 ```
-**Login:**
 
-```
-curl -X POST http://localhost:3000/api/auth/login \
--H "Content-Type: application/json" 
--d '{
-      "email":"mario@example.com", 
-      "password":"password123"
-    }'
-```
+## 🚀 Installazione e Avvio
 
-```
-curl -X POST http://localhost:3000/api/books \
--H "Content-Type: application/json" \
--H "Authorization: Bearer <TUO_TOKEN_JWT>" \
--d '{
-    "title":"Il Signore degli Anelli"
-    "author":"J.R.R. Tolkien", 
-    "price":15.50, 
-    "description":"Edizione 2001"
-    }'
-```    
-## 5. Test Eseguiti
-Registrazione utente: Verifica creazione account e errori (email già usata)
+1. **Configurazione Database**
+   ```sql
+   CREATE DATABASE marketplace;
+   USE marketplace;
+   ```
 
-Login: Test autenticazione con credenziali corrette/errate
+2. **Installazione Dipendenze Backend**
+   ```bash
+   cd backend
+   npm install
+   ```
 
-Pubblicazione annuncio: Controllo upload immagini e campi obbligatori
+3. **Configurazione Variabili d'Ambiente**
+   - Creare un file `.env` nella cartella backend con:
+     ```
+     DB_HOST=localhost
+     DB_USER=tuo_utente
+     DB_PASSWORD=tua_password
+     DB_NAME=marketplace
+     JWT_SECRET=tua_chiave_segreta
+     ```
 
-Messaggistica (da implementare)
+4. **Avvio Server**
+   ```bash
+   npm start
+   ```
 
-Ricerca con filtri (da implementare)
+5. **Avvio Frontend**
+   - Apri il file `frontend/HTML/login.html` nel browser
 
+## 🔒 Sicurezza
 
-## Istruzioni per Avviare il Progetto:
+- Autenticazione basata su JWT
+- Validazione input lato server
+- Sanitizzazione dei dati
+- Protezione contro SQL injection
+- Gestione sicura delle password
 
-Clona il repo: git clone <url_repo>
+## 📱 Responsive Design
 
-Installa dipendenze: npm install
+L'applicazione è completamente responsive e supporta:
+- Desktop
+- Tablet
+- Smartphone
 
-Configura .env con credenziali DB e JWT secret
+## 🎨 Stile e Design
 
-Avvia backend: node server.js
+- Tema caldo con colori accoglienti
+- Card con ombreggiatura
+- Animazioni fluide
+- Icone Font Awesome
+- Layout a griglia Bootstrap
 
-Apri index.html nel browser per il frontend
+## 🤝 Contribuire
+
+1. Fork del progetto
+2. Crea un branch per la tua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit delle modifiche (`git commit -m 'Add some AmazingFeature'`)
+4. Push del branch (`git push origin feature/AmazingFeature`)
+5. Apri una Pull Request
+
+## 📝 Licenza
+
+Questo progetto è sotto licenza MIT. Vedi il file `LICENSE` per maggiori dettagli.
+
+## 👥 Autori
+
+- [Il Tuo Nome] - Sviluppatore principale
+
+## 🙏 Ringraziamenti
+
+- Bootstrap per il framework CSS
+- Font Awesome per le icone
+- Express.js per il framework backend
+- MySQL per il database 
