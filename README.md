@@ -181,13 +181,6 @@ L'applicazione è completamente responsive e supporta:
 - Icone Font Awesome
 - Layout a griglia Bootstrap
 
-## 🤝 Contribuire
-
-1. Fork del progetto
-2. Crea un branch per la tua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit delle modifiche (`git commit -m 'Add some AmazingFeature'`)
-4. Push del branch (`git push origin feature/AmazingFeature`)
-5. Apri una Pull Request
 
 ## 📝 Licenza
 
@@ -195,11 +188,12 @@ Questo progetto è sotto licenza MIT. Vedi il file `LICENSE` per maggiori dettag
 
 ## 👥 Autori
 
-- [Il Tuo Nome] - Sviluppatore principale
+- Kevin Hossain e Gabriele Tarricone - Sviluppatori principali
 
 ## 🙏 Ringraziamenti
 
 - Bootstrap per il framework CSS
 - Font Awesome per le icone
 - Express.js per il framework backend
-- MySQL per il database 
+- MySQL per il database
+- IA
